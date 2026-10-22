@@ -1,0 +1,142 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="Kd7E3aUAUTcgCKp5tVgh" name="Page-1">
+    <mxGraphModel dx="2721" dy="2242" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1095" pageHeight="2015" math="0" shadow="0" adaptiveColors="auto">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;fontSize=24;fontStyle=1;align=center;html=1;whiteSpace=wrap;" value="&lt;font style=&quot;font-size: 48px;&quot;&gt;Main Coordinator&lt;/font&gt;" vertex="1">
+          <mxGeometry height="40" width="1015" x="780" y="-80" as="geometry" />
+        </mxCell>
+        <mxCell id="n0" parent="1" style="rounded=1;arcSize=50;fontSize=16;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=2;html=1;whiteSpace=wrap;" value="Every Five Minutes" vertex="1">
+          <mxGeometry height="70" width="210" x="430" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="n1" parent="1" style="rounded=1;arcSize=50;fontSize=16;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=2;html=1;whiteSpace=wrap;" value="Manual Run" vertex="1">
+          <mxGeometry height="70" width="210" x="825" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="n2" parent="1" style="shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=12;fontSize=16;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=2;html=1;whiteSpace=wrap;" value="Read Control" vertex="1">
+          <mxGeometry height="80" width="210" x="585" y="295" as="geometry" />
+        </mxCell>
+        <mxCell id="n3" parent="1" style="rounded=1;arcSize=12;fontSize=16;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=2;html=1;whiteSpace=wrap;" value="Prepare Lease" vertex="1">
+          <mxGeometry height="70" width="210" x="585" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="n4" parent="1" style="rhombus;fontSize=16;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=2;html=1;whiteSpace=wrap;" value="Lease Available?" vertex="1">
+          <mxGeometry height="100" width="220" x="580" y="595" as="geometry" />
+        </mxCell>
+        <mxCell id="n5" parent="1" style="shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=12;fontSize=16;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=2;html=1;whiteSpace=wrap;" value="Acquire Conditional Lease" vertex="1">
+          <mxGeometry height="80" width="210" x="930" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="n6" parent="1" style="rounded=1;arcSize=12;fontSize=16;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=2;html=1;whiteSpace=wrap;" value="Cycle Context" vertex="1">
+          <mxGeometry height="70" width="210" x="930" y="445" as="geometry" />
+        </mxCell>
+        <mxCell id="n7" parent="1" style="shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=12;fontSize=16;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=2;html=1;whiteSpace=wrap;" value="Get Due Leads" vertex="1">
+          <mxGeometry height="80" width="210" x="930" y="295" as="geometry" />
+        </mxCell>
+        <mxCell id="n8" parent="1" style="rounded=1;arcSize=12;fontSize=16;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=2;html=1;whiteSpace=wrap;" value="Prepare Lead Jobs" vertex="1">
+          <mxGeometry height="70" width="210" x="1290" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="n9" parent="1" style="shape=hexagon;fontSize=16;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=2;html=1;whiteSpace=wrap;" value="Loop Leads" vertex="1">
+          <mxGeometry height="80" width="210" x="1290" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="_quRbwhmPFtlfS_4jrBr-3" edge="1" parent="1" source="n10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="n9" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1440" y="560" />
+              <mxPoint x="1440" y="560" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_quRbwhmPFtlfS_4jrBr-4" connectable="0" parent="_quRbwhmPFtlfS_4jrBr-3" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;" value="loop" vertex="1">
+          <mxGeometry relative="1" x="0.0228" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n10" parent="1" style="shape=process;fontSize=16;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=2;html=1;whiteSpace=wrap;" value="Process Lead" vertex="1">
+          <mxGeometry height="70" width="210" x="1290" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="n11" parent="1" style="rounded=1;arcSize=12;fontSize=16;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=2;html=1;whiteSpace=wrap;" value="Prepare Page Slots" vertex="1">
+          <mxGeometry height="70" width="210" x="1650" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="n12" parent="1" style="shape=hexagon;fontSize=16;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=2;html=1;whiteSpace=wrap;" value="Loop Pages" vertex="1">
+          <mxGeometry height="80" width="210" x="1920" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="n13" parent="1" style="shape=process;fontSize=16;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=2;html=1;whiteSpace=wrap;" value="Discover Page" vertex="1">
+          <mxGeometry height="70" width="210" x="1680" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="n14" parent="1" style="rhombus;fontSize=16;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=2;html=1;whiteSpace=wrap;" value="Continue Scan?" vertex="1">
+          <mxGeometry height="100" width="220" x="2140" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="n15" parent="1" style="shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=12;fontSize=16;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=2;html=1;whiteSpace=wrap;" value="Release Lease" vertex="1">
+          <mxGeometry height="80" width="210" x="2200" y="295" as="geometry" />
+        </mxCell>
+        <mxCell id="e0" connectionType="main" edge="1" parent="1" source="n0" sourceOutput="0" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontSize=13;labelBackgroundColor=#ffffff;strokeWidth=1.5;strokeColor=#64748b;endArrow=block;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="n2" targetInput="0" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" connectionType="main" edge="1" parent="1" source="n2" sourceOutput="0" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontSize=13;labelBackgroundColor=#ffffff;strokeWidth=1.5;strokeColor=#64748b;endArrow=block;" target="n3" targetInput="0" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" connectionType="main" edge="1" parent="1" source="n3" sourceOutput="0" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontSize=13;labelBackgroundColor=#ffffff;strokeWidth=1.5;strokeColor=#64748b;endArrow=block;" target="n4" targetInput="0" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" connectionType="main" edge="1" parent="1" source="n1" sourceOutput="0" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontSize=13;labelBackgroundColor=#ffffff;strokeWidth=1.5;strokeColor=#64748b;endArrow=block;" target="n2" targetInput="0" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" connectionType="main" edge="1" parent="1" source="n4" sourceOutput="0" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontSize=13;labelBackgroundColor=#ffffff;strokeWidth=1.5;strokeColor=#64748b;endArrow=block;" target="n5" targetInput="0" value="true">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" connectionType="main" edge="1" parent="1" source="n5" sourceOutput="0" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontSize=13;labelBackgroundColor=#ffffff;strokeWidth=1.5;strokeColor=#64748b;endArrow=block;" target="n6" targetInput="0" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" connectionType="main" edge="1" parent="1" source="n6" sourceOutput="0" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontSize=13;labelBackgroundColor=#ffffff;strokeWidth=1.5;strokeColor=#64748b;endArrow=block;" target="n7" targetInput="0" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" connectionType="main" edge="1" parent="1" source="n7" sourceOutput="0" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontSize=13;labelBackgroundColor=#ffffff;strokeWidth=1.5;strokeColor=#64748b;endArrow=block;" target="n8" targetInput="0" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" connectionType="main" edge="1" parent="1" source="n8" sourceOutput="0" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontSize=13;labelBackgroundColor=#ffffff;strokeWidth=1.5;strokeColor=#64748b;endArrow=block;" target="n9" targetInput="0" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" connectionType="main" edge="1" parent="1" source="n9" sourceOutput="0" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontSize=13;labelBackgroundColor=#ffffff;strokeWidth=1.5;strokeColor=#64748b;endArrow=block;" target="n11" targetInput="0" value="done">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1580" y="480" />
+              <mxPoint x="1580" y="335" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e10" connectionType="main" edge="1" parent="1" source="n9" sourceOutput="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontSize=13;labelBackgroundColor=#ffffff;strokeWidth=1.5;strokeColor=#64748b;endArrow=block;" target="n10" targetInput="0" value="loop">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1350" y="570" />
+              <mxPoint x="1350" y="570" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e12" connectionType="main" edge="1" parent="1" source="n11" sourceOutput="0" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontSize=13;labelBackgroundColor=#ffffff;strokeWidth=1.5;strokeColor=#64748b;endArrow=block;" target="n12" targetInput="0" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e13" connectionType="main" edge="1" parent="1" source="n12" sourceOutput="0" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontSize=13;labelBackgroundColor=#ffffff;strokeWidth=1.5;strokeColor=#64748b;endArrow=block;" target="n15" targetInput="0" value="done">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e14" connectionType="main" edge="1" parent="1" source="n12" sourceOutput="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontSize=13;labelBackgroundColor=#ffffff;strokeWidth=1.5;strokeColor=#64748b;endArrow=block;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="n13" targetInput="0" value="loop">
+          <mxGeometry relative="1" x="0.325" as="geometry">
+            <Array as="points">
+              <mxPoint x="1780" y="420" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e15" connectionType="main" edge="1" parent="1" source="n13" sourceOutput="0" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontSize=13;labelBackgroundColor=#ffffff;strokeWidth=1.5;strokeColor=#64748b;endArrow=block;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="n14" targetInput="0" value="">
+          <mxGeometry relative="1" x="0.2819" as="geometry" />
+        </mxCell>
+        <mxCell id="e16" connectionType="main" edge="1" parent="1" source="n14" sourceOutput="0" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontSize=13;labelBackgroundColor=#ffffff;strokeWidth=1.5;strokeColor=#64748b;endArrow=block;" target="n12" targetInput="0" value="true">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e17" connectionType="main" edge="1" parent="1" source="n14" sourceOutput="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontSize=13;labelBackgroundColor=#ffffff;strokeWidth=1.5;strokeColor=#64748b;endArrow=block;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="n15" targetInput="0" value="false">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_quRbwhmPFtlfS_4jrBr-5" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;div style=&quot;&quot;&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;Blue: processing&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font size=&quot;3&quot;&gt;Green: tables&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font size=&quot;3&quot;&gt;Yellow: decisions / notes&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font size=&quot;3&quot;&gt;Purple: triggers, loops, child workflows and AI&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font size=&quot;3&quot;&gt;Solid arrows: execution&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font size=&quot;3&quot;&gt;Dashed arrows: AI model connection&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font size=&quot;3&quot;&gt;Unconnected outputs remain unconnected as exported.&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="170" width="350" x="1580" y="20" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,40 @@
+Lead Sniper draw.io recreation
+
+Open Lead-Sniper-Workflows.drawio in diagrams.net. It contains five editable pages.
+Individual .drawio files contain the same pages separately; .xml files are the graph models for inline previews.
+
+Source: C:/Users/edwin/Downloads/tryedwin-workflows
+
+Included workflow IDs (from export filenames):
+WVgWzYjdocSVykA1 — Main Coordinator: 16 elements, 18 connections
+zr7r7pAD75jubSVE — Setup and Preflight: 16 elements, 15 connections
+StdyHUjdCpc6chmu — Discover One Page: 25 elements, 29 connections
+UNuafhjltTtQgskT — Process Lead: 48 elements, 61 connections
+wRzekCTIYvCpuZGc — Record Errors: 3 elements, 2 connections
+
+Excluded:
+2vpvxo29EvvhjvfH — My Sub-Workflow 2: two-node placeholder
+CWNaayHiOrguFUG0 — My Sub-Workflow 3: two-node placeholder
+FZtM0cw5DV6r0JlU — My Sub-Workflow 1: two-node placeholder
+cihlgiO4ZiWvgPlB — duplicate Setup and Authenticated Preflight: empty
+
+Comparison with submission-draft/workflows:
+All five relevant connection graphs match exactly.
+The Downloads Main export omits the old sticky note.
+Other differences include positions, credentials, the discovery candidate filter parameters, and Slack node parameters.
+The diagrams follow the Downloads exports. They include names, node types, source annotations and connections, without executable node code, credential references or webhook configuration.
+
+Layout:
+New top-to-bottom layered placement, role colors and native editable shapes.
+True/false, done/loop, error and AI model links are labeled.
+Source sticky notes appear below each applicable graph, unchanged in content.
+Unconnected output ports remain unconnected; no invented execution steps or links.
+
+Validation:
+108 source canvas elements (105 execution/model nodes and three annotations).
+125 connections checked against exports by source, target, channel, source output and target input.
+All five individual files and the combined five-page file parsed successfully as XML.
+This validates diagram topology, not live workflow behavior.
+
+Regenerate from implementation/:
+node scripts/recreate-drawio.cjs C:/Users/edwin/Downloads/tryedwin-workflows C:/Users/edwin/Desktop/yellow/.diagram-tools/node_modules/elkjs

@@ -1,0 +1,47 @@
+[
+  {
+    "file": "01-main.drawio",
+    "source": "WVgWzYjdocSVykA1-Lead_Sniper_Cloud_Main_Edwinzynx_hdsd_whisperFT.json",
+    "title": "Main Coordinator",
+    "nodes": 16,
+    "executionNodes": 16,
+    "notes": 0,
+    "connections": 18
+  },
+  {
+    "file": "02-setup.drawio",
+    "source": "zr7r7pAD75jubSVE-Lead_Sniper_Cloud_Setup_and_Authenticated_Preflight.json",
+    "title": "Setup and Preflight",
+    "nodes": 16,
+    "executionNodes": 15,
+    "notes": 1,
+    "connections": 15
+  },
+  {
+    "file": "03-discovery.drawio",
+    "source": "StdyHUjdCpc6chmu-Lead_Sniper_Cloud_Discover_One_Page.json",
+    "title": "Discover One Page",
+    "nodes": 25,
+    "executionNodes": 24,
+    "notes": 1,
+    "connections": 29
+  },
+  {
+    "file": "04-process-lead.drawio",
+    "source": "UNuafhjltTtQgskT-Lead_Sniper_Cloud_Process_Lead.json",
+    "title": "Process Lead",
+    "nodes": 48,
+    "executionNodes": 47,
+    "notes": 1,
+    "connections": 61
+  },
+  {
+    "file": "05-errors.drawio",
+    "source": "wRzekCTIYvCpuZGc-Lead_Sniper_Cloud_Record_Errors.json",
+    "title": "Record Errors",
+    "nodes": 3,
+    "executionNodes": 3,
+    "notes": 0,
+    "connections": 2
+  }
+]
