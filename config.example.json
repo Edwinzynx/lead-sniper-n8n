@@ -1,0 +1,17 @@
+{
+  "repoOwner": "REPLACE_OWNER",
+  "repoName": "REPLACE_REPOSITORY",
+  "discoveryMode": "polling",
+  "productContext": "",
+  "llmModel": "gpt-4o-mini",
+  "credentials": {
+    "postgres": { "id": "SELECT_POSTGRES_CREDENTIAL", "name": "Lead Sniper postgres" },
+    "github": { "id": "SELECT_GITHUB_CREDENTIAL", "name": "Lead Sniper github" },
+    "openai": { "id": "SELECT_OPENAI_CREDENTIAL", "name": "Lead Sniper openai" }
+  },
+  "workflowIds": {
+    "request": "LSGitHubRequest01",
+    "processor": "LSProcessLead001",
+    "errors": "LSRecordErrors01"
+  }
+}

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1224" height="234" viewBox="0 0 1224 234">
+<rect width="1224" height="234" fill="#101827"/>
+<text x="24" y="32" fill="#f1f5f9" font-family="Arial" font-size="22">Shared error recorder — node index</text>
+<text x="24" y="59" fill="#a5b4c7" font-family="Arial" font-size="14">Generated from workflow JSON. NOT an n8n screenshot. See the Markdown graph for branch connections.</text>
+<rect x="24" y="82" width="380" height="106" rx="10" fill="#1e293b" stroke="#c084fc"/>
+<text x="38" y="107" fill="#c084fc" font-family="Arial" font-size="14">01 / errorTrigger</text>
+<text x="38" y="134" fill="#f8fafc" font-family="Arial" font-size="17">Unexpected Failure</text>
+<rect x="422" y="82" width="380" height="106" rx="10" fill="#1e293b" stroke="#60a5fa"/>
+<text x="436" y="107" fill="#60a5fa" font-family="Arial" font-size="14">02 / code</text>
+<text x="436" y="134" fill="#f8fafc" font-family="Arial" font-size="17">Safe Error Detail</text>
+<rect x="820" y="82" width="380" height="106" rx="10" fill="#1e293b" stroke="#34d399"/>
+<text x="834" y="107" fill="#34d399" font-family="Arial" font-size="14">03 / dataTable</text>
+<text x="834" y="134" fill="#f8fafc" font-family="Arial" font-size="17">Persist Error</text>
+</svg>

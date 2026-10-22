@@ -1,0 +1,105 @@
+{
+  "id": "LSRecordErrors01",
+  "name": "Lead Sniper | E - Record Unexpected Errors",
+  "active": false,
+  "nodes": [
+    {
+      "id": "43ff0b94578865eff630506f8b7eb644",
+      "name": "Execution Failed",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        200
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "5561a54b732214283c295a62d029cb7a",
+      "name": "Sanitize Execution Error",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        520,
+        200
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const e=$input.first().json;\nreturn [{json:{state:{execution_id:e.execution?.id||null,stage:'workflow',outcome:'unexpected_failure',reason:'Execution failed at '+String(e.execution?.lastNodeExecuted||e.trigger?.error?.node?.name||'trigger').slice(0,100)}}}];"
+      }
+    },
+    {
+      "id": "b44aea09ce5b07d1e937c87b1d2c97f7",
+      "name": "Record Sanitized Error",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        800,
+        200
+      ],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT lead_sniper.audit($1::jsonb) AS state;",
+        "options": {
+          "queryReplacement": "={{ [JSON.stringify($json.state)] }}",
+          "largeNumbersOutput": "text"
+        }
+      },
+      "credentials": {
+        "postgres": {
+          "id": "SELECT_POSTGRES_CREDENTIAL",
+          "name": "Lead Sniper postgres"
+        }
+      }
+    },
+    {
+      "id": "f8c05ddbcafb8ec9d16f25c4229d81c1",
+      "name": "Setup and behavior",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        180,
+        -100
+      ],
+      "parameters": {
+        "content": "Assign this workflow as Error Workflow on all the other workflows after import. It intentionally has no error workflow of its own. Raw exception text is not logged because it may contain request secrets.",
+        "width": 680,
+        "height": 240
+      }
+    }
+  ],
+  "connections": {
+    "Execution Failed": {
+      "main": [
+        [
+          {
+            "node": "Sanitize Execution Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sanitize Execution Error": {
+      "main": [
+        [
+          {
+            "node": "Record Sanitized Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "UTC",
+    "saveDataErrorExecution": "none",
+    "saveDataSuccessExecution": "none",
+    "saveManualExecutions": false,
+    "saveExecutionProgress": false,
+    "executionTimeout": 3600
+  },
+  "pinData": {}
+}

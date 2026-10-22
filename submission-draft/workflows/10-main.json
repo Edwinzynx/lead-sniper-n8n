@@ -1,0 +1,664 @@
+{
+  "id": "WVgWzYjdocSVykA1",
+  "name": "Lead Sniper | Cloud / Main - Edwinzynx hdsd-whisperFT",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes"
+            }
+          ]
+        }
+      },
+      "id": "aefa3b5c-7290-47b3-9d0c-81707617373e",
+      "name": "Every Five Minutes",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        64,
+        304
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "b3f9dcae-abf1-4818-9001-b13022f52dc8",
+      "name": "Manual Run",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        352,
+        304
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "lead_sniper_control",
+          "mode": "name"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "key",
+              "keyValue": "Edwinzynx/hdsd-whisperFT"
+            }
+          ]
+        },
+        "limit": 2
+      },
+      "id": "521cadb1-07e3-4695-87bc-efb7884b8252",
+      "name": "Read Control",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        624,
+        304
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const rows=$input.all().filter(i=>i.json.id);if(rows.length!==1)throw new Error('Run Setup first; exactly one control row is required');const r=rows[0].json;\nreturn [{json:{row:r,can_start:Date.parse(r.lease_until)<=Date.now(),owner:String($execution.id),deadline:Date.now()+150000}}];"
+      },
+      "id": "dc6a9d5b-d8f0-454f-b0f9-4b548dd1284a",
+      "name": "Prepare Lease",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        912,
+        304
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "Lease Available?",
+              "leftValue": "={{ $json.can_start === true }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "38215215-9ea4-4c71-9b90-7e919de89b7d",
+      "name": "Lease Available?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1184,
+        304
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "lead_sniper_control",
+          "mode": "name"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": "={{ $json.row.id }}"
+            },
+            {
+              "keyName": "version",
+              "keyValue": "={{ $json.row.version }}"
+            },
+            {
+              "keyName": "lease_until",
+              "condition": "lte",
+              "keyValue": "={{ new Date().toISOString() }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "version": "={{ $json.row.version + 1 }}",
+            "owner": "={{ $json.owner }}",
+            "lease_until": "={{ new Date(Date.now()+600000).toISOString() }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "version",
+              "displayName": "version",
+              "type": "number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "removed": false
+            },
+            {
+              "id": "owner",
+              "displayName": "owner",
+              "type": "string",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "removed": false
+            },
+            {
+              "id": "lease_until",
+              "displayName": "lease_until",
+              "type": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "65303be6-95f5-4d9e-aa00-8f82b1538e64",
+      "name": "Acquire Conditional Lease",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        1472,
+        304
+      ],
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "jsCode": "const control=$input.first().json;const p=$('Prepare Lease').first().json;if(control.owner!==p.owner)throw new Error('Lease not acquired');return [{json:{state:{control,owner:p.owner,deadline:p.deadline,config:JSON.parse(control.data)}}}];"
+      },
+      "id": "241c0ce3-efa2-4f28-bc13-156c27ddded6",
+      "name": "Cycle Context",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        64,
+        544
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "lead_sniper_leads",
+          "mode": "name"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "pending",
+              "condition": "isTrue"
+            },
+            {
+              "keyName": "due_at",
+              "condition": "lte",
+              "keyValue": "={{ new Date().toISOString() }}"
+            }
+          ]
+        },
+        "limit": 5,
+        "orderBy": true,
+        "orderByColumn": "due_at",
+        "orderByDirection": "ASC"
+      },
+      "id": "61968bc9-4710-4c4c-896f-15fc40238763",
+      "name": "Get Due Leads",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        352,
+        544
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const s=$('Cycle Context').first().json.state;const rows=$input.all().filter(i=>i.json.id);return rows.length?rows.map(i=>({json:{state:{...s,lead_row_id:i.json.id,lead:JSON.parse(i.json.data)}}})): [{json:{state:{...s,skip:true}}}];"
+      },
+      "id": "0304a014-f62d-4bce-ab43-e55686d06173",
+      "name": "Prepare Lead Jobs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        624,
+        544
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "aeb20134-28bb-4431-a41b-297a241579bf",
+      "name": "Loop Leads",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        912,
+        544
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "UNuafhjltTtQgskT",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/UNuafhjltTtQgskT",
+          "cachedResultName": "Lead Sniper | Cloud / Process Lead"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      },
+      "id": "53896c0f-811b-4cd5-99ab-194b5d320208",
+      "name": "Process Lead",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        1184,
+        544
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const s=$('Cycle Context').first().json.state;return Array.from({length:100},()=>({json:{state:s}}));"
+      },
+      "id": "8a69f43b-f8ba-43b5-94a2-e04a30183c43",
+      "name": "Prepare Page Slots",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1472,
+        544
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "4adc3f83-493f-454d-8bb5-2855b1f164c2",
+      "name": "Loop Pages",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        64,
+        784
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "StdyHUjdCpc6chmu",
+          "mode": "list",
+          "cachedResultName": "Lead Sniper | Cloud / Discover One Page",
+          "cachedResultUrl": "/workflow/StdyHUjdCpc6chmu"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      },
+      "id": "6f7efc63-e8e1-4b9b-a730-9816c8a961c7",
+      "name": "Discover Page",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        352,
+        784
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "Continue Scan?",
+              "leftValue": "={{ $json.state.more === true }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "6afba1d8-439e-4002-9c3a-d50bcc888e6d",
+      "name": "Continue Scan?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        624,
+        784
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "lead_sniper_control",
+          "mode": "name"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": "={{ $(\"Cycle Context\").first().json.state.control.id }}"
+            },
+            {
+              "keyName": "owner",
+              "keyValue": "={{ $(\"Cycle Context\").first().json.state.owner }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "owner": "",
+            "lease_until": "1970-01-01T00:00:00.000Z"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "owner",
+              "displayName": "owner",
+              "type": "string",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "removed": false
+            },
+            {
+              "id": "lease_until",
+              "displayName": "lease_until",
+              "type": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "0f82e093-d1cf-4881-ac91-9b85adb944bd",
+      "name": "Release Lease",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        912,
+        784
+      ],
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "content": "Import this into the shared target. Select Cloud / Process Lead and Cloud / Discover One Page in the two sub-workflow nodes. Activate only this workflow after setup. Timeout 240s; lease 600s covers a parent and an in-flight child. Do not launch sub-workflows independently.",
+        "height": 240,
+        "width": 680
+      },
+      "id": "3935559c-f923-448d-bdae-e0517ed9d0be",
+      "name": "Setup and behavior",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "Every Five Minutes": {
+      "main": [
+        [
+          {
+            "node": "Read Control",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Control": {
+      "main": [
+        [
+          {
+            "node": "Prepare Lease",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Lease": {
+      "main": [
+        [
+          {
+            "node": "Lease Available?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual Run": {
+      "main": [
+        [
+          {
+            "node": "Read Control",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lease Available?": {
+      "main": [
+        [
+          {
+            "node": "Acquire Conditional Lease",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Acquire Conditional Lease": {
+      "main": [
+        [
+          {
+            "node": "Cycle Context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cycle Context": {
+      "main": [
+        [
+          {
+            "node": "Get Due Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Due Leads": {
+      "main": [
+        [
+          {
+            "node": "Prepare Lead Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Lead Jobs": {
+      "main": [
+        [
+          {
+            "node": "Loop Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Leads": {
+      "main": [
+        [
+          {
+            "node": "Prepare Page Slots",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Process Lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Lead": {
+      "main": [
+        [
+          {
+            "node": "Loop Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Page Slots": {
+      "main": [
+        [
+          {
+            "node": "Loop Pages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Pages": {
+      "main": [
+        [
+          {
+            "node": "Release Lease",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Discover Page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Discover Page": {
+      "main": [
+        [
+          {
+            "node": "Continue Scan?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Continue Scan?": {
+      "main": [
+        [
+          {
+            "node": "Loop Pages",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Release Lease",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "timezone": "UTC",
+    "saveExecutionProgress": false,
+    "saveManualExecutions": false,
+    "saveDataErrorExecution": "none",
+    "saveDataSuccessExecution": "none",
+    "executionTimeout": 180,
+    "errorWorkflow": "wRzekCTIYvCpuZGc"
+  }
+}

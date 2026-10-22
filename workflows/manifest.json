@@ -1,0 +1,53 @@
+{
+  "target": "https://tryedwin.app.n8n.cloud/workflow/cihlgiO4ZiWvgPlB",
+  "workflows": [
+    {
+      "file": "10-github-request.json",
+      "id": "LSGitHubRequest01",
+      "name": "Lead Sniper | C - GitHub Request",
+      "nodes": 12
+    },
+    {
+      "file": "00-configure-repository.json",
+      "id": "LSSetupRepo00001",
+      "name": "Lead Sniper | Setup - Configure Repository",
+      "nodes": 6
+    },
+    {
+      "file": "20-poll-stargazers.json",
+      "id": "LSDiscoverPoll01",
+      "name": "Lead Sniper | A - Poll Stargazers",
+      "nodes": 11
+    },
+    {
+      "file": "21-receive-webhook.json",
+      "id": "LSDiscoverHook01",
+      "name": "Lead Sniper | A - Receive Star Webhook",
+      "nodes": 6
+    },
+    {
+      "file": "30-process-one-lead.json",
+      "id": "LSProcessLead001",
+      "name": "Lead Sniper | B - Process One Lead",
+      "nodes": 36
+    },
+    {
+      "file": "31-worker-schedule.json",
+      "id": "LSWorkerClock001",
+      "name": "Lead Sniper | B - Worker Schedule",
+      "nodes": 7
+    },
+    {
+      "file": "40-recover-work.json",
+      "id": "LSRecovery000001",
+      "name": "Lead Sniper | D - Recover Expired Work",
+      "nodes": 4
+    },
+    {
+      "file": "50-record-errors.json",
+      "id": "LSRecordErrors01",
+      "name": "Lead Sniper | E - Record Unexpected Errors",
+      "nodes": 4
+    }
+  ]
+}

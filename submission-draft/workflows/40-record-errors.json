@@ -1,0 +1,116 @@
+{
+  "id": "wRzekCTIYvCpuZGc",
+  "name": "Lead Sniper | Cloud / Record Errors",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "980c3727-68f9-49f6-a655-d0493713f18c",
+      "name": "Unexpected Failure",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const e=$input.first().json;return [{json:{occurred_at:new Date().toISOString(),detail:JSON.stringify({execution_id:e.execution?.id,workflow:e.workflow?.name,node:e.execution?.lastNodeExecuted||'trigger',message:'Unexpected execution failure; inspect metadata and pending leads'})}}];"
+      },
+      "id": "556145e0-9517-471c-849e-b8bf2a92c96a",
+      "name": "Safe Error Detail",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        288,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "value": "lead_sniper_events",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "occurred_at": "={{ $json.occurred_at }}",
+            "detail": "={{ $json.detail }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "occurred_at",
+              "displayName": "occurred_at",
+              "type": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "removed": false
+            },
+            {
+              "id": "detail",
+              "displayName": "detail",
+              "type": "string",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "693e29ba-5452-412f-bd87-de8ae06da81b",
+      "name": "Persist Error",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        560,
+        0
+      ],
+      "alwaysOutputData": false
+    }
+  ],
+  "connections": {
+    "Unexpected Failure": {
+      "main": [
+        [
+          {
+            "node": "Safe Error Detail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Safe Error Detail": {
+      "main": [
+        [
+          {
+            "node": "Persist Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "timezone": "UTC",
+    "saveExecutionProgress": false,
+    "saveManualExecutions": false,
+    "saveDataErrorExecution": "none",
+    "saveDataSuccessExecution": "none",
+    "executionTimeout": 180
+  }
+}

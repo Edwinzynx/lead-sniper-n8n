@@ -1,0 +1,198 @@
+{
+  "id": "LSWorkerClock001",
+  "name": "Lead Sniper | B - Worker Schedule",
+  "active": false,
+  "nodes": [
+    {
+      "id": "361934dde9d9861202605865184dde7a",
+      "name": "Every Minute",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        240,
+        200
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "b4cebdf75303ced08af96163e0f9cca8",
+      "name": "Manual Worker",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        520,
+        200
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "50631982690ad051dc322a4a9be935c1",
+      "name": "Create Ten Work Slots",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        800,
+        200
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return Array.from({length:10},(_,slot)=>({json:{slot}}));"
+      }
+    },
+    {
+      "id": "b03fd09b0c10ea5b76711f4113d1b80a",
+      "name": "Loop Work Slots",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1080,
+        200
+      ],
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      }
+    },
+    {
+      "id": "852cfba31a96aa2fdec37f5a2d3da994",
+      "name": "Process One Lead",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        1360,
+        200
+      ],
+      "parameters": {
+        "source": "database",
+        "workflowId": {
+          "__rl": true,
+          "value": "LSProcessLead001",
+          "mode": "id"
+        },
+        "mode": "once",
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      }
+    },
+    {
+      "id": "2837b49fe2e50e03928089a4f1cc3929",
+      "name": "Pace Worker",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1640,
+        200
+      ],
+      "parameters": {
+        "resume": "timeInterval",
+        "amount": 1,
+        "unit": "seconds"
+      }
+    },
+    {
+      "id": "c40d79ce0c671a78e61158b3a9797709",
+      "name": "Setup and behavior",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        180,
+        -100
+      ],
+      "parameters": {
+        "content": "Import this workflow into the shared target if desired: https://tryedwin.app.n8n.cloud/workflow/cihlgiO4ZiWvgPlB . Select the imported B - Process One Lead sub-workflow. Loop output 0 is DONE; output 1 is LOOP. Activate after preflight.",
+        "width": 680,
+        "height": 240
+      }
+    }
+  ],
+  "connections": {
+    "Every Minute": {
+      "main": [
+        [
+          {
+            "node": "Create Ten Work Slots",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Ten Work Slots": {
+      "main": [
+        [
+          {
+            "node": "Loop Work Slots",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual Worker": {
+      "main": [
+        [
+          {
+            "node": "Create Ten Work Slots",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Work Slots": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Process One Lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process One Lead": {
+      "main": [
+        [
+          {
+            "node": "Pace Worker",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pace Worker": {
+      "main": [
+        [
+          {
+            "node": "Loop Work Slots",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "UTC",
+    "saveDataErrorExecution": "none",
+    "saveDataSuccessExecution": "none",
+    "saveManualExecutions": false,
+    "saveExecutionProgress": false,
+    "executionTimeout": 3600,
+    "errorWorkflow": "LSRecordErrors01"
+  },
+  "pinData": {}
+}

@@ -1,0 +1,100 @@
+[
+  {
+    "guide": "00-setup-and-preflight.md",
+    "name": "Lead Sniper | Cloud / Setup and Authenticated Preflight",
+    "nodes": 16,
+    "id": "zr7r7pAD75jubSVE",
+    "screenshot": "provided-and-embedded",
+    "diagram": "images/00-setup-and-preflight.svg",
+    "screenshots": [
+      {
+        "path": "images/00-setup-canvas.png",
+        "source": "setup and preflight.png",
+        "sha256": "82524b50f6b8322e810914a2932b1a0c21968fb9b6af5181d54a6048469a8022",
+        "caption": "Setup and authenticated preflight: access checks, table creation, and baseline initialization."
+      }
+    ]
+  },
+  {
+    "guide": "10-main-coordinator.md",
+    "name": "Lead Sniper | Cloud / Main - Edwinzynx hdsd-whisperFT",
+    "nodes": 17,
+    "id": "WVgWzYjdocSVykA1",
+    "screenshot": "provided-and-embedded",
+    "diagram": "images/10-main-coordinator.svg",
+    "screenshots": [
+      {
+        "path": "images/10-main-canvas.png",
+        "source": "main.png",
+        "sha256": "7ea7fdcf77e964cb9fd0635d12da1944e70ccc3e078025d7d5458be21a5dcf11",
+        "caption": "Main coordinator: triggers, conditional lease, lead loop, page loop, and lease release."
+      }
+    ]
+  },
+  {
+    "guide": "20-discover-one-page.md",
+    "name": "Lead Sniper | Cloud / Discover One Page",
+    "nodes": 25,
+    "id": "StdyHUjdCpc6chmu",
+    "screenshot": "provided-and-embedded",
+    "diagram": "images/20-discover-one-page.svg",
+    "screenshots": [
+      {
+        "path": "images/20-discovery-canvas.png",
+        "source": "discover one page.png",
+        "sha256": "89ab9ae39b4fdf61fd19a642b26c263e4cf6eb1983c96a068c4ea2636e8c9a13",
+        "caption": "Discovery: page request, validation, candidate deduplication, and cursor/failure checkpoints."
+      }
+    ]
+  },
+  {
+    "guide": "30-process-one-lead.md",
+    "name": "Lead Sniper | Cloud / Process Lead",
+    "nodes": 48,
+    "id": "UNuafhjltTtQgskT",
+    "screenshot": "provided-and-embedded",
+    "diagram": "images/30-process-one-lead.svg",
+    "screenshots": [
+      {
+        "path": "images/30-process-lead-1.png",
+        "source": "process lead 1.png",
+        "sha256": "78dda1fcb0be790a8c00870848e1765e69c193e546f7f41167702d43d8007809",
+        "caption": "Part 1 \u2014 Control/lease checks, interrupted-send recovery, and profile request."
+      },
+      {
+        "path": "images/30-process-lead-2.png",
+        "source": "process lead 2.png",
+        "sha256": "d8760104abe69497101eec3248b4c7d37b6e9ca170aae771fc542ee2fb18613a",
+        "caption": "Part 2 \u2014 Profile validation, qualification, profile persistence, and initial LLM generation."
+      },
+      {
+        "path": "images/30-process-lead-3.png",
+        "source": "process lead 3.png",
+        "sha256": "a1a9238091fbf08b93d202a5f8ada0b5a2c7db480246251696dd220d7b9b57e0",
+        "caption": "Part 3 \u2014 Pitch validation/repair and saving the pitch and Slack payload."
+      },
+      {
+        "path": "images/30-process-lead-4.png",
+        "source": "process lead 4.png",
+        "sha256": "f24bff25e66fc97b2db1580f1e647cf0c873e9e81a56fa5146ab90516ed18e0d",
+        "caption": "Part 4 \u2014 Send authorization, sending checkpoint, Slack response handling, and durable outcomes."
+      }
+    ]
+  },
+  {
+    "guide": "40-shared-error-recorder.md",
+    "name": "Lead Sniper | Cloud / Record Errors",
+    "nodes": 3,
+    "id": "wRzekCTIYvCpuZGc",
+    "screenshot": "provided-and-embedded",
+    "diagram": "images/40-shared-error-recorder.svg",
+    "screenshots": [
+      {
+        "path": "images/40-errors-canvas.png",
+        "source": "record errors.png",
+        "sha256": "472eb09980f544b594fecdfa5a261a55825d365eaa6f411c73e10896a7968eae",
+        "caption": "Shared error recorder: Error Trigger, sanitized metadata, and persistent error record."
+      }
+    ]
+  }
+]

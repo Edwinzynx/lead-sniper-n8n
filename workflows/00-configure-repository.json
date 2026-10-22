@@ -1,0 +1,164 @@
+{
+  "id": "LSSetupRepo00001",
+  "name": "Lead Sniper | Setup - Configure Repository",
+  "active": false,
+  "nodes": [
+    {
+      "id": "1b6de22e68dd0bae17dd9f0ab77722f4",
+      "name": "Manual Setup",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        200
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "4e627a55834a9c36c7475a2800dc7ff9",
+      "name": "Repository Configuration",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        520,
+        200
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const c = {\"repo_owner\":\"REPLACE_OWNER\",\"repo_name\":\"REPLACE_REPOSITORY\",\"discovery_mode\":\"polling\",\"product_context\":\"\",\"llm_model\":\"gpt-4o-mini\"};\nif (c.repo_owner.startsWith('REPLACE_') || c.repo_name.startsWith('REPLACE_')) throw new Error('Set the repository in Repository Configuration first');\nreturn [{json:{state:{...c,request_url:'https://api.github.com/repos/'+encodeURIComponent(c.repo_owner)+'/'+encodeURIComponent(c.repo_name),execution_id:$execution.id}}}];"
+      }
+    },
+    {
+      "id": "b9785ca8125735f2a45acc4db4c6c4a3",
+      "name": "Verify GitHub Repository",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        800,
+        200
+      ],
+      "parameters": {
+        "source": "database",
+        "workflowId": {
+          "__rl": true,
+          "value": "LSGitHubRequest01",
+          "mode": "id"
+        },
+        "mode": "once",
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      }
+    },
+    {
+      "id": "f517a2531c811aacee4e8bd9149c339d",
+      "name": "Map Repository Identity",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1080,
+        200
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const s = $input.first().json.state;\nif (s.result.outcome !== 'success') throw new Error(s.result.reason);\nif (!s.result.body?.id || !s.result.body?.owner?.login || !s.result.body?.name) throw new Error('Invalid repository response');\nreturn [{json:{state:{...s,repo_id:String(s.result.body.id),repo_owner:s.result.body.owner.login,repo_name:s.result.body.name}}}];"
+      }
+    },
+    {
+      "id": "d180a87d35a0e07c50a3d21e972039cf",
+      "name": "Save Configuration",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1360,
+        200
+      ],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT lead_sniper.configure($1::jsonb) AS state;",
+        "options": {
+          "queryReplacement": "={{ [JSON.stringify($json.state)] }}",
+          "largeNumbersOutput": "text"
+        }
+      },
+      "credentials": {
+        "postgres": {
+          "id": "SELECT_POSTGRES_CREDENTIAL",
+          "name": "Lead Sniper postgres"
+        }
+      }
+    },
+    {
+      "id": "fcb1b913ba45760fbd920fde68ad61d9",
+      "name": "Setup and behavior",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        180,
+        -100
+      ],
+      "parameters": {
+        "content": "Run schema.sql first, select credentials, set owner/repository, and select workflow C in the sub-workflow node. This validates repository identity, NOT stargazer-list permissions. Enable only after completing README preflight.",
+        "width": 680,
+        "height": 240
+      }
+    }
+  ],
+  "connections": {
+    "Manual Setup": {
+      "main": [
+        [
+          {
+            "node": "Repository Configuration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Repository Configuration": {
+      "main": [
+        [
+          {
+            "node": "Verify GitHub Repository",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verify GitHub Repository": {
+      "main": [
+        [
+          {
+            "node": "Map Repository Identity",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Map Repository Identity": {
+      "main": [
+        [
+          {
+            "node": "Save Configuration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "UTC",
+    "saveDataErrorExecution": "none",
+    "saveDataSuccessExecution": "none",
+    "saveManualExecutions": false,
+    "saveExecutionProgress": false,
+    "executionTimeout": 3600,
+    "errorWorkflow": "LSRecordErrors01"
+  },
+  "pinData": {}
+}

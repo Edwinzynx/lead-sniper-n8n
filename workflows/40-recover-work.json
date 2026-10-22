@@ -1,0 +1,112 @@
+{
+  "id": "LSRecovery000001",
+  "name": "Lead Sniper | D - Recover Expired Work",
+  "active": false,
+  "nodes": [
+    {
+      "id": "c51076675a85a41a6ebb1cd822c557b3",
+      "name": "Every Five Minutes",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        240,
+        200
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 5
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "dd784923e9826e7355e8dd52b9fc4a44",
+      "name": "Manual Recovery",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        520,
+        200
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "55a2e40bd95421392059b0bfa6295c90",
+      "name": "Recover Expired Leases",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        800,
+        200
+      ],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT lead_sniper.recover($1::jsonb) AS state;",
+        "options": {
+          "queryReplacement": "={{ [JSON.stringify({execution_id:$execution.id})] }}",
+          "largeNumbersOutput": "text"
+        }
+      },
+      "credentials": {
+        "postgres": {
+          "id": "SELECT_POSTGRES_CREDENTIAL",
+          "name": "Lead Sniper postgres"
+        }
+      }
+    },
+    {
+      "id": "85c2ba4fa0e5a1757eb4fc776d144802",
+      "name": "Setup and behavior",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        180,
+        -100
+      ],
+      "parameters": {
+        "content": "Stale pre-send work is requeued. Stale sending work becomes delivery_unknown for manual reconciliation. Never manually change unknown to queued without checking the Slack reference.",
+        "width": 680,
+        "height": 240
+      }
+    }
+  ],
+  "connections": {
+    "Every Five Minutes": {
+      "main": [
+        [
+          {
+            "node": "Recover Expired Leases",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual Recovery": {
+      "main": [
+        [
+          {
+            "node": "Recover Expired Leases",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "UTC",
+    "saveDataErrorExecution": "none",
+    "saveDataSuccessExecution": "none",
+    "saveManualExecutions": false,
+    "saveExecutionProgress": false,
+    "executionTimeout": 3600,
+    "errorWorkflow": "LSRecordErrors01"
+  },
+  "pinData": {}
+}

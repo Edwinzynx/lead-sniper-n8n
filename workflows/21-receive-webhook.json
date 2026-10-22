@@ -1,0 +1,175 @@
+{
+  "id": "LSDiscoverHook01",
+  "name": "Lead Sniper | A - Receive Star Webhook",
+  "active": false,
+  "nodes": [
+    {
+      "id": "c107e2793caecf1339ed0943623f5ab1",
+      "name": "Receive GitHub Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        240,
+        200
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lead-sniper-github",
+        "responseMode": "responseNode",
+        "options": {
+          "rawBody": true
+        }
+      },
+      "webhookId": "b61c5fe7-d5a4-4b1e-89b5-47180d1b836b"
+    },
+    {
+      "id": "df03e0fc06845af349e14714c725261c",
+      "name": "Capture Signed Raw Body",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        520,
+        200
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const item=$input.first();\nconst bytes=await this.helpers.getBinaryDataBuffer(0,'data');\nconst h=item.json.headers||{};\nreturn [{json:{state:{raw_base64:bytes.toString('base64'),signature:h['x-hub-signature-256']||'',event_type:h['x-github-event']||'',execution_id:$execution.id}}}];"
+      }
+    },
+    {
+      "id": "de7f6adca4b3acd4aecdcec904bcff5e",
+      "name": "Verify Signature and Persist",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        800,
+        200
+      ],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT lead_sniper.webhook($1::jsonb) AS state;",
+        "options": {
+          "queryReplacement": "={{ [JSON.stringify($json.state)] }}",
+          "largeNumbersOutput": "text"
+        }
+      },
+      "credentials": {
+        "postgres": {
+          "id": "SELECT_POSTGRES_CREDENTIAL",
+          "name": "Lead Sniper postgres"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "c9c4a752c41e03c94368ac92a76f9e9b",
+      "name": "Database Unavailable",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1080,
+        200
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return [{json:{state:{http_status:503,message:'Persistence unavailable'}}}];"
+      }
+    },
+    {
+      "id": "fe422653d05332ab514a42980bcb5f6f",
+      "name": "Acknowledge Persisted Event",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        1360,
+        200
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ {message:$json.state.message} }}",
+        "options": {
+          "responseCode": "={{ $json.state.http_status }}"
+        }
+      }
+    },
+    {
+      "id": "77eda371047caaeeb5bfdbe2a7575941",
+      "name": "Setup and behavior",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        180,
+        -100
+      ],
+      "parameters": {
+        "content": "Set mode=webhook. Configure GitHub application/json star events and a strong signing secret also stored in lead_sniper.secrets. GitHub does not automatically redeliver every failed delivery; use its Recent deliveries screen after an outage.",
+        "width": 680,
+        "height": 240
+      }
+    }
+  ],
+  "connections": {
+    "Receive GitHub Webhook": {
+      "main": [
+        [
+          {
+            "node": "Capture Signed Raw Body",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Capture Signed Raw Body": {
+      "main": [
+        [
+          {
+            "node": "Verify Signature and Persist",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verify Signature and Persist": {
+      "main": [
+        [
+          {
+            "node": "Acknowledge Persisted Event",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Database Unavailable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Database Unavailable": {
+      "main": [
+        [
+          {
+            "node": "Acknowledge Persisted Event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "UTC",
+    "saveDataErrorExecution": "none",
+    "saveDataSuccessExecution": "none",
+    "saveManualExecutions": false,
+    "saveExecutionProgress": false,
+    "executionTimeout": 3600,
+    "errorWorkflow": "LSRecordErrors01"
+  },
+  "pinData": {}
+}

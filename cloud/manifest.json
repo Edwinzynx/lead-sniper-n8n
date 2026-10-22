@@ -1,0 +1,31 @@
+{
+  "repository": "Edwinzynx/hdsd-whisperFT",
+  "externalDatabaseRequired": false,
+  "workflows": [
+    {
+      "file": "00-setup-and-preflight.json",
+      "id": "LSCloudSetup0001",
+      "nodes": 16
+    },
+    {
+      "file": "10-main-openai-python.json",
+      "id": "LSCloudMain00001",
+      "nodes": 17
+    },
+    {
+      "file": "20-discover-page.json",
+      "id": "LSCloudPage00001",
+      "nodes": 25
+    },
+    {
+      "file": "30-process-lead.json",
+      "id": "LSCloudLead00001",
+      "nodes": 48
+    },
+    {
+      "file": "40-record-errors.json",
+      "id": "LSCloudErrors001",
+      "nodes": 3
+    }
+  ]
+}

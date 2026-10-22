@@ -1,0 +1,123 @@
+{
+  "id": "LSCloudErrors001",
+  "name": "Lead Sniper | Cloud / Record Errors",
+  "active": false,
+  "nodes": [
+    {
+      "id": "d528b74b4a4159ba7b335721224cca9a",
+      "name": "Unexpected Failure",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        200
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "ac3dd99c8cf026e324856c179e34dfb9",
+      "name": "Safe Error Detail",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        520,
+        200
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const e=$input.first().json;return [{json:{occurred_at:new Date().toISOString(),detail:JSON.stringify({execution_id:e.execution?.id,workflow:e.workflow?.name,node:e.execution?.lastNodeExecuted||'trigger',message:'Unexpected execution failure; inspect metadata and pending leads'})}}];"
+      }
+    },
+    {
+      "id": "88e425d19f98f10f2ac65a0dacd78b6e",
+      "name": "Persist Error",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        800,
+        200
+      ],
+      "parameters": {
+        "resource": "row",
+        "operation": "insert",
+        "dataTableId": {
+          "__rl": true,
+          "value": "lead_sniper_events",
+          "mode": "name"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": []
+        },
+        "returnAll": false,
+        "limit": 1,
+        "options": {},
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "occurred_at": "={{ $json.occurred_at }}",
+            "detail": "={{ $json.detail }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "occurred_at",
+              "displayName": "occurred_at",
+              "type": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "removed": false
+            },
+            {
+              "id": "detail",
+              "displayName": "detail",
+              "type": "string",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "alwaysOutputData": false
+    }
+  ],
+  "connections": {
+    "Unexpected Failure": {
+      "main": [
+        [
+          {
+            "node": "Safe Error Detail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Safe Error Detail": {
+      "main": [
+        [
+          {
+            "node": "Persist Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "UTC",
+    "saveDataErrorExecution": "none",
+    "saveDataSuccessExecution": "none",
+    "saveManualExecutions": false,
+    "saveExecutionProgress": false,
+    "executionTimeout": 180
+  },
+  "pinData": {}
+}

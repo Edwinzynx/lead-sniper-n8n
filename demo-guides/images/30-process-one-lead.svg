@@ -1,0 +1,149 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1224" height="2094" viewBox="0 0 1224 2094">
+<rect width="1224" height="2094" fill="#101827"/>
+<text x="24" y="32" fill="#f1f5f9" font-family="Arial" font-size="22">Process one lead — node index</text>
+<text x="24" y="59" fill="#a5b4c7" font-family="Arial" font-size="14">Generated from workflow JSON. NOT an n8n screenshot. See the Markdown graph for branch connections.</text>
+<rect x="24" y="82" width="380" height="106" rx="10" fill="#1e293b" stroke="#c084fc"/>
+<text x="38" y="107" fill="#c084fc" font-family="Arial" font-size="14">01 / executeWorkflowTrigger</text>
+<text x="38" y="134" fill="#f8fafc" font-family="Arial" font-size="17">When Executed by Another Workflow</text>
+<rect x="422" y="82" width="380" height="106" rx="10" fill="#1e293b" stroke="#60a5fa"/>
+<text x="436" y="107" fill="#60a5fa" font-family="Arial" font-size="14">02 / code</text>
+<text x="436" y="134" fill="#f8fafc" font-family="Arial" font-size="17">Prepare Lead</text>
+<rect x="820" y="82" width="380" height="106" rx="10" fill="#1e293b" stroke="#fbbf24"/>
+<text x="834" y="107" fill="#fbbf24" font-family="Arial" font-size="14">03 / if</text>
+<text x="834" y="134" fill="#f8fafc" font-family="Arial" font-size="17">Recover Uncertain Send?</text>
+<rect x="24" y="206" width="380" height="106" rx="10" fill="#1e293b" stroke="#fbbf24"/>
+<text x="38" y="231" fill="#fbbf24" font-family="Arial" font-size="14">04 / if</text>
+<text x="38" y="258" fill="#f8fafc" font-family="Arial" font-size="17">Time and Lease Available?</text>
+<rect x="422" y="206" width="380" height="106" rx="10" fill="#1e293b" stroke="#fbbf24"/>
+<text x="436" y="231" fill="#fbbf24" font-family="Arial" font-size="14">05 / if</text>
+<text x="436" y="258" fill="#f8fafc" font-family="Arial" font-size="17">Needs Profile?</text>
+<rect x="820" y="206" width="380" height="106" rx="10" fill="#1e293b" stroke="#60a5fa"/>
+<text x="834" y="231" fill="#60a5fa" font-family="Arial" font-size="14">06 / code</text>
+<text x="834" y="258" fill="#f8fafc" font-family="Arial" font-size="17">Prepare Profile</text>
+<rect x="24" y="330" width="380" height="106" rx="10" fill="#1e293b" stroke="#fbbf24"/>
+<text x="38" y="355" fill="#fbbf24" font-family="Arial" font-size="14">07 / if</text>
+<text x="38" y="382" fill="#f8fafc" font-family="Arial" font-size="17">GitHub Available?</text>
+<rect x="422" y="330" width="380" height="106" rx="10" fill="#1e293b" stroke="#c084fc"/>
+<text x="436" y="355" fill="#c084fc" font-family="Arial" font-size="14">08 / wait</text>
+<text x="436" y="382" fill="#f8fafc" font-family="Arial" font-size="17">Pace Profile Request</text>
+<rect x="820" y="330" width="380" height="106" rx="10" fill="#1e293b" stroke="#c084fc"/>
+<text x="834" y="355" fill="#c084fc" font-family="Arial" font-size="14">09 / httpRequest</text>
+<text x="834" y="382" fill="#f8fafc" font-family="Arial" font-size="17">Fetch Profile</text>
+<rect x="24" y="454" width="380" height="106" rx="10" fill="#1e293b" stroke="#60a5fa"/>
+<text x="38" y="479" fill="#60a5fa" font-family="Arial" font-size="14">10 / code</text>
+<text x="38" y="506" fill="#f8fafc" font-family="Arial" font-size="17">Classify Profile</text>
+<rect x="422" y="454" width="380" height="106" rx="10" fill="#1e293b" stroke="#60a5fa"/>
+<text x="436" y="479" fill="#60a5fa" font-family="Arial" font-size="14">11 / code</text>
+<text x="436" y="506" fill="#f8fafc" font-family="Arial" font-size="17">Profile Network Failure</text>
+<rect x="820" y="454" width="380" height="106" rx="10" fill="#1e293b" stroke="#fbbf24"/>
+<text x="834" y="479" fill="#fbbf24" font-family="Arial" font-size="14">12 / if</text>
+<text x="834" y="506" fill="#f8fafc" font-family="Arial" font-size="17">Profile Succeeded?</text>
+<rect x="24" y="578" width="380" height="106" rx="10" fill="#1e293b" stroke="#60a5fa"/>
+<text x="38" y="603" fill="#60a5fa" font-family="Arial" font-size="14">13 / code</text>
+<text x="38" y="630" fill="#f8fafc" font-family="Arial" font-size="17">Normalize and Filter</text>
+<rect x="422" y="578" width="380" height="106" rx="10" fill="#1e293b" stroke="#34d399"/>
+<text x="436" y="603" fill="#34d399" font-family="Arial" font-size="14">14 / dataTable</text>
+<text x="436" y="630" fill="#f8fafc" font-family="Arial" font-size="17">Save Profile</text>
+<rect x="820" y="578" width="380" height="106" rx="10" fill="#1e293b" stroke="#60a5fa"/>
+<text x="834" y="603" fill="#60a5fa" font-family="Arial" font-size="14">15 / code</text>
+<text x="834" y="630" fill="#f8fafc" font-family="Arial" font-size="17">Profile Saved</text>
+<rect x="24" y="702" width="380" height="106" rx="10" fill="#1e293b" stroke="#fbbf24"/>
+<text x="38" y="727" fill="#fbbf24" font-family="Arial" font-size="14">16 / if</text>
+<text x="38" y="754" fill="#f8fafc" font-family="Arial" font-size="17">Qualified Lead?</text>
+<rect x="422" y="702" width="380" height="106" rx="10" fill="#1e293b" stroke="#fbbf24"/>
+<text x="436" y="727" fill="#fbbf24" font-family="Arial" font-size="14">17 / if</text>
+<text x="436" y="754" fill="#f8fafc" font-family="Arial" font-size="17">Needs AI?</text>
+<rect x="820" y="702" width="380" height="106" rx="10" fill="#1e293b" stroke="#60a5fa"/>
+<text x="834" y="727" fill="#60a5fa" font-family="Arial" font-size="14">18 / code</text>
+<text x="834" y="754" fill="#f8fafc" font-family="Arial" font-size="17">Prepare AI Prompt</text>
+<rect x="24" y="826" width="380" height="106" rx="10" fill="#1e293b" stroke="#c084fc"/>
+<text x="38" y="851" fill="#c084fc" font-family="Arial" font-size="14">19 / chainLlm</text>
+<text x="38" y="878" fill="#f8fafc" font-family="Arial" font-size="17">Generate Pitch</text>
+<rect x="422" y="826" width="380" height="106" rx="10" fill="#1e293b" stroke="#c084fc"/>
+<text x="436" y="851" fill="#c084fc" font-family="Arial" font-size="14">20 / chainLlm</text>
+<text x="436" y="878" fill="#f8fafc" font-family="Arial" font-size="17">Repair Pitch Once</text>
+<rect x="820" y="826" width="380" height="106" rx="10" fill="#1e293b" stroke="#c084fc"/>
+<text x="834" y="851" fill="#c084fc" font-family="Arial" font-size="14">21 / lmChatOpenAi</text>
+<text x="834" y="878" fill="#f8fafc" font-family="Arial" font-size="17">OpenAI Model</text>
+<rect x="24" y="950" width="380" height="106" rx="10" fill="#1e293b" stroke="#60a5fa"/>
+<text x="38" y="975" fill="#60a5fa" font-family="Arial" font-size="14">22 / code</text>
+<text x="38" y="1002" fill="#f8fafc" font-family="Arial" font-size="17">Validate Pitch</text>
+<rect x="422" y="950" width="380" height="106" rx="10" fill="#1e293b" stroke="#fbbf24"/>
+<text x="436" y="975" fill="#fbbf24" font-family="Arial" font-size="14">23 / if</text>
+<text x="436" y="1002" fill="#f8fafc" font-family="Arial" font-size="17">Pitch Valid?</text>
+<rect x="820" y="950" width="380" height="106" rx="10" fill="#1e293b" stroke="#60a5fa"/>
+<text x="834" y="975" fill="#60a5fa" font-family="Arial" font-size="14">24 / code</text>
+<text x="834" y="1002" fill="#f8fafc" font-family="Arial" font-size="17">Prepare Repair</text>
+<rect x="24" y="1074" width="380" height="106" rx="10" fill="#1e293b" stroke="#60a5fa"/>
+<text x="38" y="1099" fill="#60a5fa" font-family="Arial" font-size="14">25 / code</text>
+<text x="38" y="1126" fill="#f8fafc" font-family="Arial" font-size="17">Validate Repair</text>
+<rect x="422" y="1074" width="380" height="106" rx="10" fill="#1e293b" stroke="#fbbf24"/>
+<text x="436" y="1099" fill="#fbbf24" font-family="Arial" font-size="14">26 / if</text>
+<text x="436" y="1126" fill="#f8fafc" font-family="Arial" font-size="17">Repair Valid?</text>
+<rect x="820" y="1074" width="380" height="106" rx="10" fill="#1e293b" stroke="#60a5fa"/>
+<text x="834" y="1099" fill="#60a5fa" font-family="Arial" font-size="14">27 / code</text>
+<text x="834" y="1126" fill="#f8fafc" font-family="Arial" font-size="17">AI Failed</text>
+<rect x="24" y="1198" width="380" height="106" rx="10" fill="#1e293b" stroke="#60a5fa"/>
+<text x="38" y="1223" fill="#60a5fa" font-family="Arial" font-size="14">28 / code</text>
+<text x="38" y="1250" fill="#f8fafc" font-family="Arial" font-size="17">Prepare Saved Pitch</text>
+<rect x="422" y="1198" width="380" height="106" rx="10" fill="#1e293b" stroke="#34d399"/>
+<text x="436" y="1223" fill="#34d399" font-family="Arial" font-size="14">29 / dataTable</text>
+<text x="436" y="1250" fill="#f8fafc" font-family="Arial" font-size="17">Save Pitch and Payload</text>
+<rect x="820" y="1198" width="380" height="106" rx="10" fill="#1e293b" stroke="#60a5fa"/>
+<text x="834" y="1223" fill="#60a5fa" font-family="Arial" font-size="14">30 / code</text>
+<text x="834" y="1250" fill="#f8fafc" font-family="Arial" font-size="17">Pitch Saved</text>
+<rect x="24" y="1322" width="380" height="106" rx="10" fill="#1e293b" stroke="#60a5fa"/>
+<text x="38" y="1347" fill="#60a5fa" font-family="Arial" font-size="14">31 / code</text>
+<text x="38" y="1374" fill="#f8fafc" font-family="Arial" font-size="17">Prepare Send Check</text>
+<rect x="422" y="1322" width="380" height="106" rx="10" fill="#1e293b" stroke="#34d399"/>
+<text x="436" y="1347" fill="#34d399" font-family="Arial" font-size="14">32 / dataTable</text>
+<text x="436" y="1374" fill="#f8fafc" font-family="Arial" font-size="17">Recheck Send Lease</text>
+<rect x="820" y="1322" width="380" height="106" rx="10" fill="#1e293b" stroke="#60a5fa"/>
+<text x="834" y="1347" fill="#60a5fa" font-family="Arial" font-size="14">33 / code</text>
+<text x="834" y="1374" fill="#f8fafc" font-family="Arial" font-size="17">Authorize Send</text>
+<rect x="24" y="1446" width="380" height="106" rx="10" fill="#1e293b" stroke="#fbbf24"/>
+<text x="38" y="1471" fill="#fbbf24" font-family="Arial" font-size="14">34 / if</text>
+<text x="38" y="1498" fill="#f8fafc" font-family="Arial" font-size="17">Send Allowed?</text>
+<rect x="422" y="1446" width="380" height="106" rx="10" fill="#1e293b" stroke="#34d399"/>
+<text x="436" y="1471" fill="#34d399" font-family="Arial" font-size="14">35 / dataTable</text>
+<text x="436" y="1498" fill="#f8fafc" font-family="Arial" font-size="17">Mark Sending</text>
+<rect x="820" y="1446" width="380" height="106" rx="10" fill="#1e293b" stroke="#60a5fa"/>
+<text x="834" y="1471" fill="#60a5fa" font-family="Arial" font-size="14">36 / code</text>
+<text x="834" y="1498" fill="#f8fafc" font-family="Arial" font-size="17">Sending Checkpoint Saved</text>
+<rect x="24" y="1570" width="380" height="106" rx="10" fill="#1e293b" stroke="#c084fc"/>
+<text x="38" y="1595" fill="#c084fc" font-family="Arial" font-size="14">37 / httpRequest</text>
+<text x="38" y="1622" fill="#f8fafc" font-family="Arial" font-size="17">Send Slack</text>
+<rect x="422" y="1570" width="380" height="106" rx="10" fill="#1e293b" stroke="#60a5fa"/>
+<text x="436" y="1595" fill="#60a5fa" font-family="Arial" font-size="14">38 / code</text>
+<text x="436" y="1622" fill="#f8fafc" font-family="Arial" font-size="17">Classify Slack</text>
+<rect x="820" y="1570" width="380" height="106" rx="10" fill="#1e293b" stroke="#60a5fa"/>
+<text x="834" y="1595" fill="#60a5fa" font-family="Arial" font-size="14">39 / code</text>
+<text x="834" y="1622" fill="#f8fafc" font-family="Arial" font-size="17">Slack Outcome Unknown</text>
+<rect x="24" y="1694" width="380" height="106" rx="10" fill="#1e293b" stroke="#60a5fa"/>
+<text x="38" y="1719" fill="#60a5fa" font-family="Arial" font-size="14">40 / code</text>
+<text x="38" y="1746" fill="#f8fafc" font-family="Arial" font-size="17">Map GitHub Failure</text>
+<rect x="422" y="1694" width="380" height="106" rx="10" fill="#1e293b" stroke="#60a5fa"/>
+<text x="436" y="1719" fill="#60a5fa" font-family="Arial" font-size="14">41 / code</text>
+<text x="436" y="1746" fill="#f8fafc" font-family="Arial" font-size="17">Outcome Checkpoint</text>
+<rect x="820" y="1694" width="380" height="106" rx="10" fill="#1e293b" stroke="#34d399"/>
+<text x="834" y="1719" fill="#34d399" font-family="Arial" font-size="14">42 / dataTable</text>
+<text x="834" y="1746" fill="#f8fafc" font-family="Arial" font-size="17">Save Lead Outcome</text>
+<rect x="24" y="1818" width="380" height="106" rx="10" fill="#1e293b" stroke="#60a5fa"/>
+<text x="38" y="1843" fill="#60a5fa" font-family="Arial" font-size="14">43 / code</text>
+<text x="38" y="1870" fill="#f8fafc" font-family="Arial" font-size="17">Restore Outcome</text>
+<rect x="422" y="1818" width="380" height="106" rx="10" fill="#1e293b" stroke="#34d399"/>
+<text x="436" y="1843" fill="#34d399" font-family="Arial" font-size="14">44 / dataTable</text>
+<text x="436" y="1870" fill="#f8fafc" font-family="Arial" font-size="17">Save Service Cooldowns</text>
+<rect x="820" y="1818" width="380" height="106" rx="10" fill="#1e293b" stroke="#60a5fa"/>
+<text x="834" y="1843" fill="#60a5fa" font-family="Arial" font-size="14">45 / code</text>
+<text x="834" y="1870" fill="#f8fafc" font-family="Arial" font-size="17">Outcome Saved</text>
+<rect x="24" y="1942" width="380" height="106" rx="10" fill="#1e293b" stroke="#34d399"/>
+<text x="38" y="1967" fill="#34d399" font-family="Arial" font-size="14">46 / dataTable</text>
+<text x="38" y="1994" fill="#f8fafc" font-family="Arial" font-size="17">Read Control</text>
+<rect x="422" y="1942" width="380" height="106" rx="10" fill="#1e293b" stroke="#60a5fa"/>
+<text x="436" y="1967" fill="#60a5fa" font-family="Arial" font-size="14">47 / code</text>
+<text x="436" y="1994" fill="#f8fafc" font-family="Arial" font-size="17">Return Outcome</text>
+<rect x="820" y="1942" width="380" height="106" rx="10" fill="#1e293b" stroke="#c084fc"/>
+<text x="834" y="1967" fill="#c084fc" font-family="Arial" font-size="14">48 / stickyNote</text>
+<text x="834" y="1994" fill="#f8fafc" font-family="Arial" font-size="17">Setup and behavior</text>
+</svg>
